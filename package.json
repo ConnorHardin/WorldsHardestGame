@@ -1,0 +1,15 @@
+{
+  "name": "worlds-hardest-game-clone",
+  "version": "1.0.0",
+  "description": "A browser game inspired by World's Hardest Game, built with TypeScript and Vite.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
