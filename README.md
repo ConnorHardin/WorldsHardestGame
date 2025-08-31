@@ -70,7 +70,3 @@ WorldsHardestGame/
 - Game design and code: [ConnorHardin](https://github.com/ConnorHardin)
 - Inspired by the original World's Hardest Game
 
-## License
-MIT License
-# WorldsHardestGame
-
