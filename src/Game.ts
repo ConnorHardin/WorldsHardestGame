@@ -129,6 +129,15 @@ export class Game {
   private handleMenuSelect(index: number) {
     const selected = this.menuOptions[index];
     if (selected === 'Play') {
+      // Always start at Level 1, reset deaths and player
+      this.levelIndex = 0;
+      this.level = new Level(levels[this.levelIndex]);
+      this.player.reset(
+        this.level.data.playerStart.x,
+        this.level.data.playerStart.y
+      );
+      this.loadEnemies();
+      this.deaths = 0;
       this.menuState = 'game';
     } else if (selected === 'Level Select') {
       this.menuState = 'levelselect';
