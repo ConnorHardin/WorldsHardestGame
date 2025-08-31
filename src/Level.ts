@@ -2,6 +2,7 @@
 import { EnemyData } from './Enemy';
 import { Player } from './Player';
 import { level2 } from './level2';
+import { level3 } from './level3';
 
 export interface LevelData {
   playerStart: { x: number; y: number };
@@ -21,22 +22,68 @@ export const levels: LevelData[] = [
       { xStart: 200, xEnd: 500, yStart: 250, yEnd: 250, speed: 1.5, radius: 18 },
     ],
   },
-  // Level 2 (converted from level2.ts)
+  // Level 2 (converted from level2.ts, paths now span full play zone)
   {
     playerStart: level2.playerStart,
     start: level2.startZone,
     goal: level2.goalZone,
-    enemies: level2.enemies.map(e => ({
-      // Convert EnemyConfig to EnemyData (for straight path movement)
-      xStart: e.path.x1,
-      xEnd: e.path.x2,
-      yStart: e.path.y1,
-      yEnd: e.path.y2,
-      speed: Math.max(Math.abs(e.speedX), Math.abs(e.speedY)),
-      radius: e.radius,
-    })),
+    enemies: level2.enemies.map(e => {
+      if (e.speedY !== 0) {
+        return {
+          xStart: e.x,
+          xEnd: e.x,
+          yStart: 0,
+          yEnd: 600,
+          speed: Math.abs(e.speedY),
+          radius: e.radius,
+        };
+      } else {
+        return {
+          xStart: 0,
+          xEnd: 800,
+          yStart: e.y,
+          yEnd: e.y,
+          speed: Math.abs(e.speedX),
+          radius: e.radius,
+        };
+      }
+    }),
     obstacles: level2.obstacles,
   },
+  // Level 3 (from level3.ts, converted to LevelData)
+  {
+    playerStart: level3.playerStart,
+    start: level3.startZone,
+    goal: level3.goalZone,
+    enemies: level3.enemies.map(e => {
+      if (e.speedX !== 0) {
+        return {
+          xStart: e.path.x1,
+          xEnd: e.path.x2,
+          yStart: e.y,
+          yEnd: e.y,
+          speed: Math.abs(e.speedX),
+          radius: e.radius,
+        };
+      } else {
+        return {
+          xStart: e.x,
+          xEnd: e.x,
+          yStart: e.path.y1,
+          yEnd: e.path.y2,
+          speed: Math.abs(e.speedY),
+          radius: e.radius,
+        };
+      }
+    }),
+    obstacles: level3.obstacles?.map(o => ({
+      x: o.x,
+      y: o.y,
+      width: o.width,
+      height: o.height,
+    })),
+  },
+// ...existing code...
 ];
 
 export class Level {
